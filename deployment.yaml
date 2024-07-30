@@ -1,0 +1,24 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-storage-service
+  namespace: document-storage
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: document-storage-service
+  template:
+    metadata:
+      labels:
+        app: document-storage-service
+    spec:
+      containers:
+        - name: document-storage-service
+          image: dmlone/document-storage-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
